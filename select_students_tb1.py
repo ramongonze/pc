@@ -1,6 +1,7 @@
 # Input: All the files sent to one exercise", from class TB1
 # Output: Remove all directories which are note sudents from id [29,57]
 
+import sys
 import os
 import shutil
 
@@ -34,17 +35,15 @@ students = {"Luan Silva Tomaz",
 "Vitor Maciel Rodrigues",
 "Yasmini Kelly Gomes dos Santos"}
 
-for i in [3,4,5]:
-	os.chdir("/home/ramongonze/Desktop/turma_tb1/exercicio" + str(i))
+exercicio = sys.argv[1]
+os.chdir("/home/ramon/Desktop/pc/turma_tb1/exercicio" + exercicio)
 
-	for directory in os.listdir():
-		student = directory.split('_')[0]
+for directory in os.listdir():
+	student = directory.split('_')[0]
 
-		if student not in students:
-			shutil.rmtree(directory) # Remove the directory and everything inside it
-		else:
-			os.rename(directory, student)
+	if student not in students:
+		shutil.rmtree(directory) # Remove the directory and everything inside it
+	else:
+		os.rename(directory, student)
 
-
-
-
+os.chdir("/home/ramon/Desktop/pc")
