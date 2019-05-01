@@ -1,25 +1,38 @@
-# argv[1] = Caminho completo do arquivo .py do aluno
+# argv[1] = Caminho completo do gabarito (.py) da aula
+# argv[2] = Caminho completo do arquivo .py do aluno
 
 import sys
 
-file = sys.argv[1]
-import file
+gabarito = __import__(sys.argv[1])
+ex_aluno = __import__(sys.argv[2])
+exercicio=6
 
+# Contém os exercícios existentes
+# Cada elemento i é uma lista.
+# Ex.:
+#		Exercício 2:
+#		2.1.1
+#		2.1.2
+#		2.2
+#		2.3
+#		exercicios[1] = [[1,2], 2, 3]
+#
+# exercicios[i] = -1 quando o exercício não é para ser
+# corrigido automaticamente.
+exercicios = [
+	[1], # Exercício 1
+	[2], # Exercício 2
+	[-1], # Exercício 3
+	[1,2,3,4,5,6,7,8,9,10,11,12] # Exercício 4
+]
 
-import Luan Silva Tomaz
-import LucasMarxTFreitas05
-import Lucas Omar Fonseca Ferreira - Aula 6
-import Untitled6
-import MatheusPangella
-import Otávio Gabriel Campos 6 (1)
-import PauloHenriqueFarah.Aula06
-import PauloIgorRodrigues
-import Pedro Henrique Bernardes Solha
-import Aula 6
-import Rafael Goulart Rosse - Aula 6
-import Raíssa_Nepomuceno_Freitas_Exercícios_aula06
-import Tiago Mártires Gregório aula06
-import Victor Hugo da Costa Soares de Oliveira
-import Vítor Maciel aula6.py
+for ex in exercicios:
+	ex += 1
 
+	if type(ex) == type([]):
+		# O exercício possui sub-exercícios
+		for sub_ex in ex:
 
+	else:
+		# O exercício não possui sub-exercícios
+		

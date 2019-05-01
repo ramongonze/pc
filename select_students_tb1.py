@@ -35,6 +35,7 @@ students = {"Luan Silva Tomaz",
 "Vitor Maciel Rodrigues",
 "Yasmini Kelly Gomes dos Santos"}
 
+# argv[1] = Número do exercício
 exercicio = sys.argv[1]
 os.chdir("/home/ramon/Desktop/pc/turma_tb1/exercicio" + exercicio)
 

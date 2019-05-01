@@ -234,8 +234,3 @@ def ex_4_12(termos):
         com 2.
     """
     return 2+ex_4_12_w(termos,2)
-
-
-
-for i in range(1,5):
-    web.tel
