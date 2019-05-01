@@ -13,3 +13,19 @@ for file in *; do
 	done
 	cd ..
 done
+
+# Print all .py files inside students' directories
+# for file in *; do
+# 	cd "$file"
+# 	f=0
+# 	for py_file in *.py; do
+# 		if [[ $py_file != "*.py" ]]; then
+# 			f=1
+# 			echo "$py_file"
+# 		fi
+# 	done
+# 	if [[ $f -eq 0 ]]; then
+# 		echo "No file .py found from student $file"
+# 	fi
+# 	cd ..
+# done
