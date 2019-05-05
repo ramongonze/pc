@@ -56,9 +56,11 @@ while read caminhoAluno; do
 
 		cd "${aluno[-1]}"
 		while read caminhoExercicio; do
-			IFS='/'
-			read -ra exercicioAluno <<< "$caminhoExercicio"
-			jupyter nbconvert --to script "${exercicioAluno[-1]}"
+			if [ ! -z "$caminhoExercicio" ]; then
+				IFS='/'
+				read -ra exercicioAluno <<< "$caminhoExercicio"
+				jupyter nbconvert --to script "${exercicioAluno[-1]}"
+			fi
 		done <<<$(find ./ -maxdepth 1 -path "*.ipynb" -type f)
 		cd ..
 	fi
@@ -84,7 +86,7 @@ while read caminhoAluno; do
 				read -ra exercicioAluno <<< "$caminhoExercicio"
 				
 				# Verifica se o aluno não colocou nenhum print no código
-				if [ -z $(cat "${exercicioAluno[-1]}" | grep "print(") ]; then
+				if [[ $(cat "${exercicioAluno[-1]}" | grep "print(") == "" ]]; then
 					cp "${exercicioAluno[-1]}" ../../corretores/exercicio.py
 				else
 					existePrint=true
@@ -94,7 +96,7 @@ while read caminhoAluno; do
 		
 		if [[ "$existeArquivoPy" = true ]]; then
 			if [[ "$existePrint" = true ]]; then
-				echo "${aluno[-1]}: Ha print's no arquivo do aluno" >> ../../notas.txt
+				echo "${aluno[-1]}: Exitem print's no arquivo do aluno" >> ../../notas.txt
 			else
 				echo "${aluno[-1]}: $(python3 ../../corretores/$corretor.py exercicio $gabarito)" >> ../../notas.txt
 			fi
@@ -110,8 +112,8 @@ cd ..
 echo "Feito"
 
 # Remove os arquivos copiados para a pasta corretores
-rm -f corretores/exercicio.py corretores/$gabarito
-rm -f -r corretores/__py_cache__
+rm -f corretores/exercicio.py corretores/$gabarito.py
+rm -f -r corretores/__pycache__
 
 # Ordena o arquivo notas.txt por ordem alfabética
 sort notas.txt >> notas_tmp.txt
