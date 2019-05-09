@@ -15,8 +15,18 @@ def exercicio_2(n):
 ########################################
 
 # Exercício 3
-# Teste feito no próprio corretor, pois há duas respostas corretas:
-# "1 2 3 4 5\n6 7 8 9 10" e "1 2 3 4 5\n6 7 8 9 10\n"
+def exercicio_3(t):
+	ans = ""
+	for i in range(int(len(t)/2)):
+		ans = ans + str(t[i]) + " "
+	ans = ans[:-1] + '\n' # Troca o útlimo espaço por \n
+	
+	for i in range(int((len(t)/2)), len(t)):
+		ans = ans + str(t[i]) + " "
+	ans = ans[:-1] + '\n' # Troca o útlimo espaço por \n
+	
+	return ans
+
 ########################################
 
 # Exercício 4
@@ -55,9 +65,10 @@ def exercicio_6(l, n):
 
 # Exercício 7
 def exercicio_7(cotacao):
-	res = []
+	s = ''
+	
 	for i in range(1,101):
-		res.append(((i*cotacao, i), (i, i*cotacao)))
-
-	return res
+		s += f'US$ {i:6.2f} R$ {i*cotacao:6.2f}   R$ {i:6.2f} US$ {i/cotacao:6.2f}\n--------------------   --------------------\n'
+	
+	return s
 ########################################

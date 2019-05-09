@@ -39,7 +39,6 @@ try:
 	nota_final += nota_parcial
 	########################################
 	
-	
 	# Exercício 2
 	nota_parcial = 0.0
 	for i in range(10):
@@ -53,12 +52,20 @@ try:
 	########################################
 	
 	# Exercício 3
-	try:
-		assert((aluno.exercicio_3() == "1 2 3 4 5\n6 7 8 9 10") or \
-		(aluno.exercicio_3() == "1 2 3 4 5\n6 7 8 9 10\n"))
-		nota_final += 1
-	except:
-		pass
+	tuplas = [2,4,6,8,10]
+	nota_parcial = 0.0
+	for i in tuplas:
+		try:
+			respAluno = aluno.exercicio_3(tuple(range(i)))
+			respGabarito1 = gabarito.exercicio_3(tuple(range(i)))
+			respGabarito2 = respGabarito1[:-1] # String sem o \n no final
+
+			assert(respAluno == respGabarito1 or respAluno == respGabarito2)
+			nota_parcial += (1.0/len(tuplas))
+		except:
+			pass
+	
+	nota_final += nota_parcial
 	########################################
 	
 	# Exercício 4
@@ -98,7 +105,6 @@ try:
 	listas_de_tuplas = [ [[(10,20,30), (40,50,60), (70,80,90)], 100],\
 	 [[(1,1,1), (1,1,1)], 1], [[(3,2,1), (6,5,4), (9,8,7)], -1]]
 	nota_parcial = 0.0
-	
 	for l, n in listas_de_tuplas:
 		try:
 			assert(aluno.exercicio_6(l, n) == gabarito.exercicio_6(l, n))
@@ -112,10 +118,13 @@ try:
 	# Exercício 7
 	cotacoes = [1.00, 3.98, 4.5, 0.5]
 	nota_parcial = 0.0
-	
 	for c in cotacoes:
 		try:
-			assert(aluno.exercicio_7(c) == gabarito.exercicio_7(c))
+			respAluno = aluno.exercicio_7(c)
+			respGabarito1 = gabarito.exercicio_7(c)
+			respGabarito2 = respGabarito1[:-1] # String sem o \n no final
+
+			assert(respAluno == respGabarito1 or respAluno == respGabarito2)
 			nota_parcial += (1.0/len(cotacoes))
 		except:
 			pass
