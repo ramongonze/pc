@@ -76,8 +76,8 @@ while read caminhoAluno; do
 	if [[ "$caminhoAluno" != "." ]]; then
 		IFS='/'
 		read -ra aluno <<< "$caminhoAluno"
+
 		existeArquivoPy=false
-		existePrint=false
 		cd "${aluno[-1]}"
 		while read caminhoExercicio; do
 			if [ ! -z "$caminhoExercicio" ]; then
@@ -85,21 +85,17 @@ while read caminhoAluno; do
 				IFS='/'
 				read -ra exercicioAluno <<< "$caminhoExercicio"
 				
-				# Verifica se o aluno não colocou nenhum print no código
-				if [[ $(cat "${exercicioAluno[-1]}" | grep "print(") == "" ]]; then
-					cp "${exercicioAluno[-1]}" ../../corretores/exercicio.py
-				else
-					existePrint=true
-				fi
+				# Comenta todos os print's do código
+				cd "../../"
+				python3 "fixCode.py" "./exercicios-alunos/${aluno[-1]}/${exercicioAluno[-1]}"
+				cd "./exercicios-alunos/${aluno[-1]}"
+
+				cp "${exercicioAluno[-1]}" "../../corretores/exercicio.py"
 			fi
 		done <<<$(find ./ -maxdepth 1 -path "*.py" -type f)
 		
 		if [[ "$existeArquivoPy" = true ]]; then
-			if [[ "$existePrint" = true ]]; then
-				echo "${aluno[-1]}: Exitem print's no arquivo do aluno" >> ../../notas.txt
-			else
-				echo "${aluno[-1]}: $(python3 ../../corretores/$corretor.py exercicio $gabarito)" >> ../../notas.txt
-			fi
+			echo "${aluno[-1]}: $(python3 ../../corretores/$corretor.py exercicio $gabarito)" >> ../../notas.txt
 		else
 			echo "${aluno[-1]}: O arquivo do aluno nao eh um Jupyter Notebook" >> ../../notas.txt
 		fi

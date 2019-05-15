@@ -16,7 +16,13 @@
 	Saída: Nota final do aluno para o exercício 9, no intervalo [0,100].
 """
 
-import sys
+import sys, signal
+
+def signal_handler(signum, frame):
+    raise Exception("Timed out!")
+
+signal.signal(signal.SIGALRM, signal_handler)
+tempoAlarme = 2 # Quantidade de segundos para executar 1 exercício
 
 # Try-catch usado para verificar se há erro de sintaxe no arquivo python do aluno
 try:
@@ -31,9 +37,11 @@ try:
 	nota_parcial = 0.0
 	for i in range(10):
 		try:
+			signal.alarm(tempoAlarme) # 2 segundos para executar a função
 			assert(aluno.exercicio_1(i) == gabarito.exercicio_1(i))
 			nota_parcial += (1.0/10)
-		except:
+			signal.alarm(0) # Cancela o alarme
+		except Exception:
 			continue
 	
 	nota_final += nota_parcial
@@ -43,9 +51,11 @@ try:
 	nota_parcial = 0.0
 	for i in range(10):
 		try:
+			signal.alarm(tempoAlarme) # 2 segundos para executar a função
 			assert(aluno.exercicio_2(i) == gabarito.exercicio_2(i))
 			nota_parcial += (1.0/10)
-		except:
+			signal.alarm(0) # Cancela o alarme
+		except Exception:
 			continue
 	
 	nota_final += nota_parcial
@@ -56,13 +66,15 @@ try:
 	nota_parcial = 0.0
 	for i in tuplas:
 		try:
+			signal.alarm(tempoAlarme) # 2 segundos para executar a função
 			respAluno = aluno.exercicio_3(tuple(range(i)))
 			respGabarito1 = gabarito.exercicio_3(tuple(range(i)))
 			respGabarito2 = respGabarito1[:-1] # String sem o \n no final
 
 			assert(respAluno == respGabarito1 or respAluno == respGabarito2)
 			nota_parcial += (1.0/len(tuplas))
-		except:
+			signal.alarm(0) # Cancela o alarme
+		except Exception:
 			pass
 	
 	nota_final += nota_parcial
@@ -74,9 +86,11 @@ try:
 	 (0,1,2,3,4), (9,6,1,2,7,7,8,6,6)]
 	for t in tuplas:
 		try:
+			signal.alarm(tempoAlarme) # 2 segundos para executar a função
 			assert(aluno.exercicio_4(t) == gabarito.exercicio_4(t))
 			nota_parcial += (1.0/len(tuplas))
-		except:
+			signal.alarm(0) # Cancela o alarme
+		except Exception:
 			continue
 	
 	nota_final += nota_parcial
@@ -87,15 +101,19 @@ try:
 	listas = [[1,2,3,4,5], [3,2,1], [8], []]
 	for l in listas:
 		try:
+			signal.alarm(tempoAlarme) # 2 segundos para executar a função
 			assert(aluno.exercicio_5_1(t) == gabarito.exercicio_5_1(t))
 			nota_parcial += (1.0/(2.0*len(listas)))
-		except:
+			signal.alarm(0) # Cancela o alarme
+		except Exception:
 			pass
 	
 		try:
+			signal.alarm(tempoAlarme) # 2 segundos para executar a função
 			assert(aluno.exercicio_5_2(t) == gabarito.exercicio_5_2(t))
 			nota_parcial += (1.0/(2.0*len(listas)))
-		except:
+			signal.alarm(0) # Cancela o alarme
+		except Exception:
 			pass
 	
 	nota_final += nota_parcial
@@ -107,9 +125,11 @@ try:
 	nota_parcial = 0.0
 	for l, n in listas_de_tuplas:
 		try:
+			signal.alarm(tempoAlarme) # 2 segundos para executar a função
 			assert(aluno.exercicio_6(l, n) == gabarito.exercicio_6(l, n))
 			nota_parcial += (1.0/len(listas_de_tuplas))
-		except:
+			signal.alarm(0) # Cancela o alarme
+		except Exception:
 			pass
 	
 	nota_final += nota_parcial
@@ -120,13 +140,15 @@ try:
 	nota_parcial = 0.0
 	for c in cotacoes:
 		try:
+			signal.alarm(tempoAlarme) # 2 segundos para executar a função
 			respAluno = aluno.exercicio_7(c)
 			respGabarito1 = gabarito.exercicio_7(c)
 			respGabarito2 = respGabarito1[:-1] # String sem o \n no final
 
 			assert(respAluno == respGabarito1 or respAluno == respGabarito2)
 			nota_parcial += (1.0/len(cotacoes))
-		except:
+			signal.alarm(0) # Cancela o alarme
+		except Exception:
 			pass
 	
 	nota_final += nota_parcial
@@ -142,4 +164,4 @@ try:
 	# A nota está no intervalo [0,100]
 	print("%.2f"%((nota_final/num_questoes)*100))
 except:
-	print("Erro de sintaxe no python ou texto em celulas nao-Markdown")
+	print("Erro de sintaxe no python")
