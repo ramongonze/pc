@@ -22,7 +22,7 @@ codigoFinal = []
 linha = 0
 nLinhas = len(codigoSemPrintEInput)
 while linha < nLinhas:
-	if "exercicio_" in codigoSemPrintEInput[linha]:
+	if "def " in codigoSemPrintEInput[linha]:
 		# É a definição de uma função de exercício
 
 		# Copia todas as linhas que possuem um '\t'
