@@ -11,25 +11,29 @@ import sys, os
 
 
 arquivo = open(sys.argv[1])
-codigoSemPrintEInput = []
+
+# Remove linhas que contenham prints e inputs
+codigoLimpo = []
 for linha in arquivo:
 	if "print" in linha or "input" in linha:
 		continue
-	codigoSemPrintEInput.append(linha)
+	codigoLimpo.append(linha)
 arquivo.close()
 
 codigoFinal = []
 linha = 0
-nLinhas = len(codigoSemPrintEInput)
+nLinhas = len(codigoLimpo)
 while linha < nLinhas:
-	if "def " in codigoSemPrintEInput[linha]:
+	if "def " in codigoLimpo[linha]:
 		# É a definição de uma função de exercício
 
 		# Copia todas as linhas que possuem um '\t'
-		funcao = codigoSemPrintEInput[linha]
+		funcao = codigoLimpo[linha]
 		linha += 1
-		while linha < nLinhas and (codigoSemPrintEInput[linha][0] == '\t' or codigoSemPrintEInput[linha][0] == ' '):
-			funcao += codigoSemPrintEInput[linha]
+		while linha < nLinhas and (codigoLimpo[linha][0] == '\t' or \
+			codigoLimpo[linha][0] == ' '):
+			funcao += (codigoLimpo[linha].lower().\
+				replace('exercício', 'exercicio'))
 			linha += 1
 
 		# Verifico se a função tem pelo menos 1 linha
