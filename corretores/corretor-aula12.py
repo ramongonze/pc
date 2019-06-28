@@ -43,7 +43,7 @@ def signal_handler(signum, frame):
 ################### Definições ######################
 signal.signal(signal.SIGALRM, signal_handler)
 tempo_alarme = 2 # Quantidade de segundos para executar 1 exercício
-num_questoes = 1 # Número de exercícios da aula
+num_questoes = 4 # Número de exercícios da aula
 nota_final = 0.0
 #####################################################
 
@@ -58,6 +58,10 @@ def comparaStrings(s1, s2, tipo):
 		s1: String 1
 		s2: String 2
 		tipo: Representação 1, 2 ou 3
+
+		Retorno:
+			True se s1 == s2
+			False se s1 != s2
 	"""
 	if tipo == 1:
 		for i in range(len(s1)):
@@ -200,9 +204,30 @@ nota_final += nota_parcial
 ###############
 
 ##### 3.4 #####
-testes = ["programação", "ábcãàó", "quick sort"]
-
-gabarito = 2
+testes = ["programação", "Ábcãàó..", "pAS!D!qwo?péDie."]
+gabarito = [\
+			[
+			 (['a', 'ã', 'o'], [2,1,2]),
+			 ([], []),
+			 (['ç', 'g', 'm', 'p', 'r'], [1,1,1,1,2]),
+			 ([], []),
+			 ([], [])
+			],
+			[\
+			 (['ã','à','ó'], [1,1,1]),
+			 (['Á'], [1]),
+			 (['b','c'], [1,1]),
+			 ([], []),
+			 (['.'], [2])
+			],
+			[\
+			(['o','i','e','é'], [1,1,1]),
+			(['A'], [1]),
+			(['p','q','w'], [2,1,1]),
+			(['D','S'], [2,1]),
+			(['?','!','.'], [1,2,1]),
+			]
+		   ]
 
 for i in range(len(testes)):
 	try:
@@ -210,13 +235,17 @@ for i in range(len(testes)):
 		saida = aluno.exercicio_12_3_4(testes[i][0], testes[i][1])
 		signal.alarm(0) # Cancela o alarme
 
-		assert(saida == gabarito)
+		correto = True
+		for j in range(5):
+			if not comparaStrings(saida[j], gabarito[i][j],1):
+				correto = False
+
+		assert(correto)
 		nota_parcial += (1/len(testes)/6)
 	except Exception:
 		continue
 
 nota_final += nota_parcial
-
 ###############
 
 ##### 3.5 #####
@@ -346,23 +375,48 @@ nota_final += nota_parcial
 ###############
 
 ##### 4.4 #####
-testes = ["programação", "ábcãàó", "quick sort"]
-
-gabarito = 2
+testes = ["programação", "Ábcãàó..", "pAS!D!qwo?péDie."]
+gabarito = [\
+			[
+			 (['a', 'ã', 'o'], [2,1,2]),
+			 ([], []),
+			 (['ç', 'g', 'm', 'p', 'r'], [1,1,1,1,2]),
+			 ([], []),
+			 ([], [])
+			],
+			[\
+			 (['ã','à','ó'], [1,1,1]),
+			 (['Á'], [1]),
+			 (['b','c'], [1,1]),
+			 ([], []),
+			 (['.'], [2])
+			],
+			[\
+			(['o','i','e','é'], [1,1,1]),
+			(['A'], [1]),
+			(['p','q','w'], [2,1,1]),
+			(['D','S'], [2,1]),
+			(['?','!','.'], [1,2,1]),
+			]
+		   ]
 
 for i in range(len(testes)):
 	try:
 		signal.alarm(tempo_alarme)
-		saida = aluno.exercicio_12_4_4(testes[i][0], testes[i][1])
+		saida = aluno.exercicio_12_3_4(testes[i][0], testes[i][1])
 		signal.alarm(0) # Cancela o alarme
 
-		assert(saida == gabarito)
+		correto = True
+		for j in range(5):
+			if not comparaStrings(saida[j], gabarito[i][j],1):
+				correto = False
+
+		assert(correto)
 		nota_parcial += (1/len(testes)/6)
 	except Exception:
 		continue
 
 nota_final += nota_parcial
-
 ###############
 
 ##### 4.5 #####
@@ -414,6 +468,9 @@ nota_final += nota_parcial
 #####################################################
 
 ################### Exercício 5 #####################
+"""
+	Estes exercícios deverão ser corrigidos manualmente
+"""
 #####################################################
 
 #####################################################
