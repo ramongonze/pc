@@ -18,7 +18,7 @@
 import sys, signal
 
 def signalHandler(signum, frame):
-    raise Exception("Timed out!")
+    raise Exception('Timed out!')
 
 ################################# Definições ######################################################
 signal.signal(signal.SIGALRM, signalHandler)
@@ -29,20 +29,20 @@ notaFinal = 0.0
 	A variável 'exercicios' deve ser uma lista de strings com os nomes das funções dos exercícios.
 	Ex.: exercicios = ["exercicio_1_1", "exercicio_1_2", "exercicio_2", ...]
 """
-exercicios = ["exercicio_1_1", "exercicio_1_2",\
-			  "exercicio_2",\
-			  "exercicio_3_1_1", "exercicio_3_1_2",\
-			  "exercicio_3_2_1", "exercicio_3_2_2",\
-			  "exercicio_3_3_1", "exercicio_3_3_2",\
-			  "exercicio_3_4_1", "exercicio_3_4_2",\
-			  "exercicio_3_5_1", "exercicio_3_5_2",\
-			  "exercicio_3_6_1", "exercicio_3_6_2",\
-			  "exercicio_3_7_1", "exercicio_3_7_2",\
-			  "exercicio_3_8_1", "exercicio_3_8_2",\
-			  "exercicio_3_9_1", "exercicio_3_9_2",\
-			  "exercicio_3_10_1", "exercicio_3_10_2",\
-			  "exercicio_3_11_1", "exercicio_3_11_2",\
-			  "exercicio_3_12_1", "exercicio_3_12_2"
+exercicios = ['exercicio_1_1', 'exercicio_1_2',\
+			  'exercicio_2',\
+			  'exercicio_3_1_1', 'exercicio_3_1_2',\
+			  'exercicio_3_2_1', 'exercicio_3_2_2',\
+			  'exercicio_3_3_1', 'exercicio_3_3_2',\
+			  'exercicio_3_4_1', 'exercicio_3_4_2',\
+			  'exercicio_3_5_1', 'exercicio_3_5_2',\
+			  'exercicio_3_6_1', 'exercicio_3_6_2',\
+			  'exercicio_3_7_1', 'exercicio_3_7_2',\
+			  'exercicio_3_8_1', 'exercicio_3_8_2',\
+			  'exercicio_3_9_1', 'exercicio_3_9_2',\
+			  'exercicio_3_10_1', 'exercicio_3_10_2',\
+			  'exercicio_3_11_1', 'exercicio_3_11_2',\
+			  'exercicio_3_12_1', 'exercicio_3_12_2'
 			 ]
 
 numExercicios = len(exercicios) # Número TOTAL de exercícios
@@ -62,16 +62,16 @@ testes = [[(n,0) for n in range(20)], \
 		  [n for n in range(1,31)], \
 		  [n for n in range(1,31)], \
 		  [n for n in range(1,31)], \
-		  [(n, k) for n in range(10) for k in range(10)], \
-		  [(n, k) for n in range(10) for k in range(10)], \
-		  [(n, x, k) for n in range(10) for x in range(10) for k in range(10)], \
-		  [(n, x, k) for n in range(10) for x in range(10) for k in range(10)], \
-		  [(n, k) for n in range(10) for k in range(10)], \
-		  [(n, k) for n in range(10) for k in range(10)], \
-		  [n for n in range(30)], \
-		  [n for n in range(30)], \
-		  [n for n in range(30)], \
-		  [n for n in range(30)], \
+		  [n for n in range(1,21)], \
+		  [n for n in range(1,21)], \
+		  [(n, x) for n in range(1,11) for x in range(10)], \
+		  [(n, x) for n in range(1,11) for x in range(10)], \
+		  [n for n in range(1,21)], \
+		  [n for n in range(1,21)], \
+		  [n for n in range(1,31)], \
+		  [n for n in range(1,31)], \
+		  [n for n in range(20)], \
+		  [n for n in range(20)], \
 		  [n for n in range(1,31)], \
 		  [n for n in range(1,31)], \
 		  [n for n in range(1,31)], \
@@ -107,11 +107,11 @@ for i in numExercicios:
 	for j in range(nTestes):
 		if type(j) != type((0,0)):
 			# A função possui somente 1 parâmetro
-			execucaoGabarito = "saidaGabarito = gabarito." + exercicios[i] + "(" + str(testes[i][j]) + ")"
+			execucaoGabarito = 'saidaGabarito = gabarito.' + exercicios[i] + '(' + str(testes[i][j]) + ')'
 			exec(execucaoGabarito)
 			
 			try:
-				execucaoAluno = "saidaAluno = aluno." + exercicios[i] + "(" + str(testes[i][j]) + ")"
+				execucaoAluno = 'saidaAluno = aluno.' + exercicios[i] + '(' + str(testes[i][j]) + ')'
 				signal.alarm(tempoAlarme) # Ativa o alarme
 				exec(execucaoAluno)
 				signal.alarm(0) # Cancela o alarme
@@ -124,8 +124,8 @@ for i in numExercicios:
 			# A função possui mais de 1 parâmetro
 			nParam = len(testes[i][j]) # Número de parâmetros da função
 
-			execucaoGabarito = "saidaGabarito = gabarito." + exercicios[i] + '('
-			execucaoAluno = "saidaAluno = aluno." + exercicios[i] + '('
+			execucaoGabarito = 'saidaGabarito = gabarito.' + exercicios[i] + '('
+			execucaoAluno = 'saidaAluno = aluno.' + exercicios[i] + '('
 			for parametro in range(nParam):
 				execucaoGabarito = execucaoGabarito + str(testes[i][j][parametro]) + ','
 				execucaoAluno 	 = execucaoAluno    + str(testes[i][j][parametro]) + ','
@@ -154,5 +154,5 @@ if notaFinal >= 0.99:
 
 # Imprime a nota final do aluno com 4 casas decimais.
 # A nota está no intervalo [0,1]
-print("%.2f"%notaFinal)
+print('%.2f'%notaFinal)
 
