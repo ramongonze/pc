@@ -2,7 +2,8 @@
 	Corretor automático dos exercícios das aulas da disciplica Programação de Computadores.
 
 	Pré-requisitos:
-		Jupyter: Necessário para converter os arquivos .ipynb para .py através do comando "jupyter nbconvert"
+		jupyter: Necessário para converter os arquivos .ipynb para .py através do comando "jupyter nbconvert"
+		unzip: Necessário para descompactar o .zip baixado do Moodle.
 
 	Antes da execução:
 		1. O arquivo .py com o gabarito deve estar na pasta "gabaritos", com o nome
@@ -23,7 +24,7 @@
 		6. Executar o script:
 			$ ./corretor.sh
 
-	Saída do script: Será gerado um arquivo "notas.txt" contendo um par (aluno,nota) por linha.
+	Saída do script: Será gerado um arquivo "notas.csv" contendo um par (aluno,nota) por linha.
 '
 
 # Coloque o número do exercício a ser corrigido
@@ -33,8 +34,8 @@ corretor="corretor-aula$numExercicio"
 gabarito="gabarito-aula$numExercicio"
 ################################################################################
 
-# Remove o arquivo notas.txt se ele já existir
-rm -f notas.txt
+# Remove o arquivo notas.csv se ele já existir
+rm -f notas.csv
 
 # Renomeia os diretórios gerados pelo Moodle, deixando somente o nome dos alunos
 cd "./exercicios-alunos"
@@ -71,7 +72,7 @@ cd ..
 
 echo "Corrigindo os exercicios..."
 
-# Corrige os exercícios e gera o arquivo "notas.txt" com as notas de todos os alunos
+# Corrige os exercícios e gera o arquivo "notas.csv" com as notas de todos os alunos
 cp gabaritos/$gabarito.py corretores/
 cd "./exercicios-alunos"
 while read caminhoAluno; do
@@ -97,9 +98,9 @@ while read caminhoAluno; do
 		done <<<$(find ./ -maxdepth 1 -path "*.py" -type f)
 		
 		if [[ "$existeArquivoPy" = true ]]; then
-			echo "${aluno[-1]}: $(python3 ../../corretores/$corretor.py exercicio $gabarito)" >> ../../notas.txt
+			echo "${aluno[-1]},$(python3 ../../corretores/$corretor.py exercicio $gabarito)" >> ../../notas.csv
 		else
-			echo "${aluno[-1]}: O arquivo do aluno nao eh um Jupyter Notebook" >> ../../notas.txt
+			echo "${aluno[-1]},O arquivo do aluno nao eh um Jupyter Notebook" >> ../../notas.csv
 		fi
 		cd ..
 
@@ -113,7 +114,7 @@ echo "Feito"
 rm -f corretores/exercicio.py corretores/$gabarito.py
 rm -f -r corretores/__pycache__
 
-# Ordena o arquivo notas.txt por ordem alfabética
-sort notas.txt >> notas_tmp.txt
-rm notas.txt
-mv notas_tmp.txt notas.txt
+# Ordena o arquivo notas.csv por ordem alfabética
+sort notas.csv >> notas_tmp.txt
+rm notas.csv
+mv notas_tmp.txt notas.csv

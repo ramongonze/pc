@@ -37,25 +37,16 @@ while linha < nLinhas:
 
 		# Verifica se a função possui a palavra return. Caso não, ela não é adicionada no arquivo
 		if funcao.count('return') >= 1: 
-		
-			# Testa se a sintaxe da função está correta
-			# Caso sim, continua com ela no arquivo original
-			# Caso não, remove ela do arquivo original
-			testaFuncao = open("teste.py", "w")
-			testaFuncao.write(funcao)
-			testaFuncao.close()
-
-			print('AQUI:: ' + str(arquivo))
-			print(funcao)
-			print('-----')
+			"""
+				Testa se há algum erro de sintaxe na função
+				- Caso sim, mantém ela no arquivo original
+				- Caso não, remove ela do arquivo original
+			"""
 			try:
-				t = __import__("teste")
+				exec(funcao)
 				codigoFinal.append(funcao + '\n')
 			except:
-				print('caiu')
 				continue
-			
-			os.remove("teste.py")
 
 	linha += 1
 
