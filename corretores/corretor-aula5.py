@@ -11,8 +11,8 @@
 		Execução do script:
 		$ python3 corretor-aulaX.py alunos/joao gabaritos/aulaX
 
-	Saída: Nota final do aluno para o exercício, no intervalo [0,1] (porcentagem).
-		   Em caso de erro, a saída será uma string com o erro correspondente.
+	Saída (stdout): Nota final do aluno para o exercício, no intervalo [0,1] (porcentagem).
+		   			Em caso de erro, a saída será uma string com o erro correspondente.
 """
 
 import sys, signal
@@ -89,23 +89,23 @@ testes = [[(n,0) for n in range(20)], \
 # Try-catch usado para verificar se há erro de sintaxe no arquivo do aluno
 try:
 	aluno = __import__(sys.argv[1])
-except:
-	print('Erro ao importar o arquivo do aluno.')
+except Exception as e:
+	print('Erro ao importar o arquivo do aluno: ' + str(e))
 
 # Try-catch usado para verificar se há erro de sintaxe no arquivo do aluno
 try:
 	gabarito = __import__(sys.argv[2])
-except:
-	print('Erro ao importar o gabarito.')
+except Exception as e:
+	print('Erro ao importar o gabarito: ' + str(e))
 
 
 ############################################# Correção #############################################
-for i in numExercicios:
+for i in range(numExercicios):
 	nTestes = len(testes[i]) # Números de testes para o i-ésimo exercício
 
 	notaParcial = 0.0
 	for j in range(nTestes):
-		if type(j) != type((0,0)):
+		if type(testes[i][j]) != type((0,0)):
 			# A função possui somente 1 parâmetro
 			execucaoGabarito = 'saidaGabarito = gabarito.' + exercicios[i] + '(' + str(testes[i][j]) + ')'
 			exec(execucaoGabarito)
@@ -130,8 +130,9 @@ for i in numExercicios:
 				execucaoGabarito = execucaoGabarito + str(testes[i][j][parametro]) + ','
 				execucaoAluno 	 = execucaoAluno    + str(testes[i][j][parametro]) + ','
 
-			execucaoGabarito[-1] = ')' # Substitui a última vírgula por ')'
-			execucaoAluno[-1] 	 = ')' # Substitui a última vírgula por ')'
+			execucaoGabarito = execucaoGabarito[:-1] + ')' # Substitui a última vírgula por ')'
+			execucaoAluno 	 = execucaoAluno[:-1] + ')' # Substitui a última vírgula por ')'
+
 			exec(execucaoGabarito)
 
 			try:

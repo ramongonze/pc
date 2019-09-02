@@ -1,10 +1,6 @@
-# -*- coding: utf-8 -*-
 """
-Created on Fri Apr 12 10:00:10 2019
-
-@author: José, Ramon
-
-Exercícios da aula 5
+    Gabarito dos exercícios da aula 5
+    @author: José, Ramon
 """
 
 def exercicio_1_1(n, i):
@@ -114,7 +110,7 @@ def exercicio_3_5_w(n, sinal):
 def exercicio_3_5_1(n):
     """ wrapper para exercicio_3_5_w(n,sinal), como o sinal == (-1)^n
     """
-   return exercicio_3_5_w(n,(-1)**n)
+    return exercicio_3_5_w(n,(-1)**n)
 
 def exercicio_3_5_2(n):
     return exercicio_3_5_1(n)
@@ -150,7 +146,7 @@ def exercicio_3_7_1(n):
         return 0
     if n == 1:
         return 1
-    return exercicio_3_7_1(n-1) exercicio_3_7_2(n-2)
+    return exercicio_3_7_1(n-1) + exercicio_3_7_2(n-2)
 
 def exercicio_3_7_2(n):
     return exercicio_3_7_1(n)
@@ -259,7 +255,7 @@ def exercicio_3_11_w(x,num,termos):
     """
     res = None
     if termos == 1:
-        res = x
+        res = 1/(num/x)
     elif termos > 1:
         res = 1/(num/x - exercicio_3_11_w(x, num+2, termos-1))
     return res

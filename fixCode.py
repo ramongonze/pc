@@ -9,7 +9,6 @@
 
 import sys, os
 
-
 arquivo = open(sys.argv[1])
 
 # Remove linhas que contenham prints e inputs
@@ -25,7 +24,7 @@ linha = 0
 nLinhas = len(codigoLimpo)
 while linha < nLinhas:
 	if "def " in codigoLimpo[linha]:
-		# É a definição de uma função de exercício
+		# É a definição de uma função
 
 		# Copia todas as linhas que possuem um '\t'
 		funcao = codigoLimpo[linha]
@@ -36,22 +35,27 @@ while linha < nLinhas:
 				replace('exercício', 'exercicio'))
 			linha += 1
 
-		# Verifico se a função tem pelo menos 1 linha
-		if funcao.count("\n") >= 2: 
+		# Verifica se a função possui a palavra return. Caso não, ela não é adicionada no arquivo
+		if funcao.count('return') >= 1: 
 		
 			# Testa se a sintaxe da função está correta
 			# Caso sim, continua com ela no arquivo original
 			# Caso não, remove ela do arquivo original
-			try:
-				testaFuncao = open("teste.py", "w")
-				testaFuncao.write(funcao)
-				testaFuncao.close()
+			testaFuncao = open("teste.py", "w")
+			testaFuncao.write(funcao)
+			testaFuncao.close()
 
+			print('AQUI:: ' + str(arquivo))
+			print(funcao)
+			print('-----')
+			try:
 				t = __import__("teste")
-				codigoFinal.append(funcao)
-				os.remove("teste.py")
+				codigoFinal.append(funcao + '\n')
 			except:
-				None
+				print('caiu')
+				continue
+			
+			os.remove("teste.py")
 
 	linha += 1
 

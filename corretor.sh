@@ -1,13 +1,15 @@
 : ' 
 	Corretor automático dos exercícios das aulas da disciplica Programação de Computadores.
-	1º semestre de 2019
+
+	Pré-requisitos:
+		Jupyter: Necessário para converter os arquivos .ipynb para .py através do comando "jupyter nbconvert"
 
 	Antes da execução:
 		1. O arquivo .py com o gabarito deve estar na pasta "gabaritos", com o nome
-		"gabarito-aulaX", onde X é o número da aula;
+		"gabarito-aulaX.py", onde X é o número da aula;
 		2. O arquivo .py com o corretor deve estar na pasta "corretores", com o nome
-		"corretor-aulaX", onde X é o número da aula;
-		2. Preencha a variável "numExercicio" com o nome do exercício a ser corrigido.
+		"corretor-aulaX.py", onde X é o número da aula;
+		3. Preencha a variável "numExercicio" com o nome do exercício a ser corrigido.
 
 	Instruções de uso:
 		1. Abrir a atividade do Moodle que contém os arquivos dos alunos;
@@ -25,7 +27,7 @@
 '
 
 # Coloque o número do exercício a ser corrigido
-numExercicio=9
+numExercicio=5
 
 corretor="corretor-aula$numExercicio"
 gabarito="gabarito-aula$numExercicio"

@@ -11,22 +11,24 @@
 		Execução do script:
 		$ python3 corretor-aulaX.py alunos/joao gabaritos/aulaX
 
-	Saída: Nota final do aluno para o exercício, no intervalo [0,1] (porcentagem).
-		   Em caso de erro, a saída será uma string com o erro correspondente.
+	Saída (stdout): Nota final do aluno para o exercício, no intervalo [0,1] (porcentagem).
+		   		   Em caso de erro, a saída será uma string com o erro correspondente.
 """
 
 import sys, signal
 
 def signalHandler(signum, frame):
-    raise Exception("Timed out!")
+    raise Exception('Timed out!')
 
 ################################# Definições ######################################################
 signal.signal(signal.SIGALRM, signalHandler)
-tempoAlarme = 1 # Quantidade de segundos para executar 1 exercício
+tempoAlarme = 2 # Quantidade de segundos para executar 1 exercício
 notaFinal = 0.0
 
-# A variável 'exercicios' deve ser uma lista de strings com os nomes das funções dos exercícios.
-# Ex.: exercicios = ["exercicio_1_1", "exercicio_1_2", "exercicio_2", ...]
+"""
+	A variável 'exercicios' deve ser uma lista de strings com os nomes das funções dos exercícios.
+	Ex.: exercicios = ["exercicio_1_1", "exercicio_1_2", "exercicio_2", ...]
+"""
 exercicios = [\
 			 ]
 
@@ -59,18 +61,18 @@ except:
 
 
 ############################################# Correção #############################################
-for i in numExercicios:
+for i in range(numExercicios):
 	nTestes = len(testes[i]) # Números de testes para o i-ésimo exercício
 
 	notaParcial = 0.0
 	for j in range(nTestes):
-		if type(j) != type((0,0)):
+		if type(testes[i][j]) != type((0,0)):
 			# A função possui somente 1 parâmetro
-			execucaoGabarito = "saidaGabarito = gabarito." + exercicios[i] + "(" + str(testes[i][j]) + ")"
+			execucaoGabarito = 'saidaGabarito = gabarito.' + exercicios[i] + '(' + str(testes[i][j]) + ')'
 			exec(execucaoGabarito)
 			
 			try:
-				execucaoAluno = "saidaAluno = aluno." + exercicios[i] + "(" + str(testes[i][j]) + ")"
+				execucaoAluno = 'saidaAluno = aluno.' + exercicios[i] + '(' + str(testes[i][j]) + ')'
 				signal.alarm(tempoAlarme) # Ativa o alarme
 				exec(execucaoAluno)
 				signal.alarm(0) # Cancela o alarme
@@ -83,14 +85,15 @@ for i in numExercicios:
 			# A função possui mais de 1 parâmetro
 			nParam = len(testes[i][j]) # Número de parâmetros da função
 
-			execucaoGabarito = "saidaGabarito = gabarito." + exercicios[i] + '('
-			execucaoAluno = "saidaAluno = aluno." + exercicios[i] + '('
+			execucaoGabarito = 'saidaGabarito = gabarito.' + exercicios[i] + '('
+			execucaoAluno = 'saidaAluno = aluno.' + exercicios[i] + '('
 			for parametro in range(nParam):
 				execucaoGabarito = execucaoGabarito + str(testes[i][j][parametro]) + ','
 				execucaoAluno 	 = execucaoAluno    + str(testes[i][j][parametro]) + ','
 
-			execucaoGabarito[-1] = ')' # Substitui a última vírgula por ')'
-			execucaoAluno[-1] 	 = ')' # Substitui a última vírgula por ')'
+			execucaoGabarito = execucaoGabarito[:-1] + ')' # Substitui a última vírgula por ')'
+			execucaoAluno 	 = execucaoAluno[:-1] + ')' # Substitui a última vírgula por ')'
+
 			exec(execucaoGabarito)
 
 			try:
@@ -113,4 +116,5 @@ if notaFinal >= 0.99:
 
 # Imprime a nota final do aluno com 4 casas decimais.
 # A nota está no intervalo [0,1]
-print("%.4f"%notaFinal)
+print('%.2f'%notaFinal)
+
