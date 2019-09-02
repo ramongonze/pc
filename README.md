@@ -21,7 +21,7 @@ Para executar o corretor automático, siga os seguintes passos:
 
    - Será gerado um arquivo .zip;
 
-4. Extrair o conteúdo do .zip em uma pasta com o nome `exercicios-alunos`, e ela deve estar no mesmo diretório deste script;
+4. Extrair o conteúdo do .zip em uma pasta com o nome `exercicios-alunos`. Esta pasta deve estar no mesmo diretório do script `corretor.sh`;
 5. Executar o seguinte comando para permitir a execução do script:
 ```bash
    $ chmod +x ./corretor.sh
