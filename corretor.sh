@@ -42,7 +42,7 @@
 '
 
 # Coloque o número do exercício a ser corrigido
-numExercicio=5
+numExercicio=7
 
 corretor="corretor-aula$numExercicio"
 gabarito="gabarito-aula$numExercicio"

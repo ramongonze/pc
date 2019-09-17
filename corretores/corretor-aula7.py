@@ -22,14 +22,21 @@ def signalHandler(signum, frame):
 
 ################################# Definições ######################################################
 signal.signal(signal.SIGALRM, signalHandler)
-tempoAlarme = 2 # Quantidade de segundos para executar 1 exercício
+tempoAlarme = 1 # Quantidade de segundos para executar 1 exercício
 notaFinal = 0.0
 
 """
 	A variável 'exercicios' deve ser uma lista de strings com os nomes das funções dos exercícios.
 	Ex.: exercicios = ["exercicio_1_1", "exercicio_1_2", "exercicio_2", ...]
 """
-exercicios = [\
+exercicios = ['exercicio_1', \
+			  'exercicio_2_1', 'exercicio_2_2', \
+			  'exercicio_3_1', 'exercicio_3_2', \
+			  'exercicio_4', \
+			  'exercicio_5', \
+			  'exercicio_6_1', 'exercicio_6_2', \
+			  'exercicio_7_1', 'exercicio_7_2', \
+			  'exercicio_8_1', 'exercicio_8_2', 'exercicio_8_3'
 			 ]
 
 numExercicios = len(exercicios) # Número TOTAL de exercícios
@@ -41,8 +48,26 @@ numExercicios = len(exercicios) # Número TOTAL de exercícios
 
 	--> O teste em si são os argumentos que a função irá receber. Caso a função do exercício receba
 		mais que um parâmetro, então o elemento será uma tupla.
+
+	Obs: Se a função não receber nenhum parâmetro (isto é, tiver execução única), então o seu 
+		 conjunto de testes será uma lista vazia.
 """
-testes = [\
+from random import randint
+
+testes = [[n for n in range(1,5)], \
+		  [n for n in range(11)], \
+		  [n for n in range(11)], \
+		  [n for n in range(51)], \
+		  [n for n in range(51)], \
+		  [n for n in range(100)], \
+		  [[]] + [[randint(0,100) for j in range(10)] for i in range(5)], \
+		  [], \
+		  [], \
+		  [n for n in range(1,100)], \
+		  [n for n in range(1,100)], \
+		  [(a,b) for a in range(1,5) for b in range(5)], \
+		  [(a,b) for a in range(1,5) for b in range(5)], \
+		  [(a,b) for a in range(1,5) for b in range(5)]
 		 ]
 
 ####################################################################################################
@@ -59,6 +84,10 @@ try:
 except:
 	print('Erro ao importar o gabarito.')
 
+
+####################################################################################################
+#	OBS: O exercício 1 deverá ser corrigido à mão, portando, será ignorado nesse corretor.
+####################################################################################################
 
 ############################################# Correção #############################################
 for i in range(1, numExercicios):
