@@ -16,6 +16,7 @@
 """
 
 import sys, signal
+from random import randint
 
 def signalHandler(signum, frame):
     raise Exception('Timed out!')
@@ -29,8 +30,19 @@ notaFinal = 0.0
 	A variável 'exercicios' deve ser uma lista de strings com os nomes das funções dos exercícios.
 	Ex.: exercicios = ["exercicio_1_1", "exercicio_1_2", "exercicio_2", ...]
 """
-exercicios = [\
+exercicios = ['exercicio_1', \
+			  'exercicio_2', \
+			  'exercicio_3', \
+			  'exercicio_4', \
+			  'exercicio_5', \
+			  'exercicio_6', \
+			  'exercicio_7', \
+			  'exercicio_8', \
 			 ]
+
+####################################################################################################
+# OBS.: O exercício 9 deve ser corrigido manualmente
+####################################################################################################
 
 numExercicios = len(exercicios) # Número TOTAL de exercícios
 
@@ -42,7 +54,15 @@ numExercicios = len(exercicios) # Número TOTAL de exercícios
 	--> O teste em si são os argumentos que a função irá receber. Caso a função do exercício receba
 		mais que um parâmetro, então o elemento será uma tupla.
 """
-testes = [\
+testes = [[[randint(1,1000)] * i for i in range(1,11)], \
+		  [[randint(1,1000)] * i for i in range(1,11)], \
+		  [[randint(1,1000)] * i for i in range(11)], \
+		  [['abc', 'xyz', 'aba', '1221'], ['dasdpjqad', 'dopqdopqk', 'kk'], \
+		  ['poieqop', 'dpoaskdopa', 'd', 'q', 'ldsl'], ['31231', '9377329', 'll', 'podispop']], \
+		  [[randint(1,1000)] * i for i in range(11)], \
+		  [([randint(1,100) for i in range(randint(1,50))] , [randint(1,100) for i in range(randint(1,50))]) for i in range(50)], \
+		  list(range(1,30)), \
+		  list(range(1,30))
 		 ]
 
 ####################################################################################################
