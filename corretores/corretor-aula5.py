@@ -22,7 +22,7 @@ def signalHandler(signum, frame):
 
 ################################# Definições ######################################################
 signal.signal(signal.SIGALRM, signalHandler)
-tempoAlarme = 2 # Quantidade de segundos para executar 1 exercício
+tempoAlarme = 1 # Quantidade de segundos para executar 1 exercício
 notaFinal = 0.0
 
 """
@@ -98,52 +98,70 @@ try:
 except Exception as e:
 	print('Erro ao importar o gabarito: ' + str(e))
 
-
 ############################################# Correção #############################################
 for i in range(numExercicios):
 	nTestes = len(testes[i]) # Números de testes para o i-ésimo exercício
 
 	notaParcial = 0.0
-	for j in range(nTestes):
-		if type(testes[i][j]) != type((0,0)):
-			# A função possui somente 1 parâmetro
-			execucaoGabarito = 'saidaGabarito = gabarito.' + exercicios[i] + '(' + str(testes[i][j]) + ')'
-			exec(execucaoGabarito)
-			
-			try:
-				execucaoAluno = 'saidaAluno = aluno.' + exercicios[i] + '(' + str(testes[i][j]) + ')'
-				signal.alarm(tempoAlarme) # Ativa o alarme
-				exec(execucaoAluno)
-				signal.alarm(0) # Cancela o alarme
+	if nTestes == 0:
+		# A função não recebe parâmetros
 
-				assert(saidaGabarito == saidaAluno)
-				notaParcial += (1/nTestes)
-			except Exception:
-				continue
-		else:
-			# A função possui mais de 1 parâmetro
-			nParam = len(testes[i][j]) # Número de parâmetros da função
+		execucaoGabarito = 'saidaGabarito = gabarito.' + exercicios[i] + '()'
+		exec(execucaoGabarito)
+		
+		try:
+			execucaoAluno = 'saidaAluno = aluno.' + exercicios[i] + '()'
+			signal.alarm(tempoAlarme) # Ativa o alarme
+			exec(execucaoAluno)
+			signal.alarm(0) # Cancela o alarme
 
-			execucaoGabarito = 'saidaGabarito = gabarito.' + exercicios[i] + '('
-			execucaoAluno = 'saidaAluno = aluno.' + exercicios[i] + '('
-			for parametro in range(nParam):
-				execucaoGabarito = execucaoGabarito + str(testes[i][j][parametro]) + ','
-				execucaoAluno 	 = execucaoAluno    + str(testes[i][j][parametro]) + ','
+			assert(saidaGabarito == saidaAluno)
+			notaParcial = 1
+		except Exception:
+			None
+	else:
+		# A Função possui pelo menos 1 parâmetro
 
-			execucaoGabarito = execucaoGabarito[:-1] + ')' # Substitui a última vírgula por ')'
-			execucaoAluno 	 = execucaoAluno[:-1] + ')' # Substitui a última vírgula por ')'
+		for j in range(nTestes):
+			if type(testes[i][j]) != type((0,0)):
+				# A função possui somente 1 parâmetro
+				execucaoGabarito = 'saidaGabarito = gabarito.' + exercicios[i] + '(' + str(testes[i][j]) + ')'
+				exec(execucaoGabarito)
+				
+				try:
+					execucaoAluno = 'saidaAluno = aluno.' + exercicios[i] + '(' + str(testes[i][j]) + ')'
+					signal.alarm(tempoAlarme) # Ativa o alarme
+					exec(execucaoAluno)
+					signal.alarm(0) # Cancela o alarme
 
-			exec(execucaoGabarito)
+					assert(saidaGabarito == saidaAluno)
+					notaParcial += (1/nTestes)
+				except Exception:
+					continue
+			else:
+				# A função possui mais de 1 parâmetro
+				nParam = len(testes[i][j]) # Número de parâmetros da função
 
-			try:
-				signal.alarm(tempoAlarme) # Ativa o alarme
-				exec(execucaoAluno)
-				signal.alarm(0) # Cancela o alarme
+				execucaoGabarito = 'saidaGabarito = gabarito.' + exercicios[i] + '('
+				execucaoAluno = 'saidaAluno = aluno.' + exercicios[i] + '('
+				for parametro in range(nParam):
+					execucaoGabarito = execucaoGabarito + str(testes[i][j][parametro]) + ','
+					execucaoAluno 	 = execucaoAluno    + str(testes[i][j][parametro]) + ','
 
-				assert(saidaGabarito == saidaAluno)
-				notaParcial += (1/nTestes)
-			except Exception:
-				continue
+				execucaoGabarito = execucaoGabarito[:-1] + ')' # Substitui a última vírgula por ')'
+				execucaoAluno 	 = execucaoAluno[:-1] + ')' # Substitui a última vírgula por ')'
+
+				exec(execucaoGabarito)
+
+				try:
+					signal.alarm(tempoAlarme) # Ativa o alarme
+					exec(execucaoAluno)
+					signal.alarm(0) # Cancela o alarme
+
+					assert(saidaGabarito == saidaAluno)
+					notaParcial += (1/nTestes)
+				except Exception:
+					continue
 
 	notaFinal += (notaParcial * 1.0/numExercicios)
 ####################################################################################################
