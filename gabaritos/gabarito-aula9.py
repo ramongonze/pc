@@ -32,3 +32,9 @@ def exercicio_7(cotacao):
 		L.append((i, i*cotacao))
 		L.append((i,i/cotacao))
 	return L
+
+def exercicio_8(cotacao):
+	s = ''
+	for i in range(1,101):
+		s += f'US$ {i:6.2f} R$ {i*cotacao:6.2f}   R$ {i:6.2f} US$ {i/cotacao:6.2f}\n--------------------   --------------------\n'
+	return s

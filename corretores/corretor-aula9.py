@@ -38,7 +38,8 @@ exercicios = ['exercicio_1', \
 			  'exercicio_4', \
 			  'exercicio_5', \
 			  'exercicio_6', \
-			  'exercicio_7'
+			  'exercicio_7', \
+			  'exercicio_8'
 			 ]
 
 numExercicios = len(exercicios) # Número TOTAL de exercícios
@@ -57,6 +58,7 @@ testes = [list(range(1,20)) , \
 		  [[randint(1,100) for j in range(1,i)] for i in range(1,101)], \
 		  [[randint(1,100) for j in range(1,i)] for i in range(1,101)], \
 		  [([[randint(1,100) for j in range(1,1+randint(1,30))] for i in range(1,k+1)], randint(1,100)) for k in range(1,30)], \
+		  [3.00, 3.15, 3.30, 3.45, 3.50, 3.65, 3.80, 4.00, 4.12, 4.30], \
 		  [3.00, 3.15, 3.30, 3.45, 3.50, 3.65, 3.80, 4.00, 4.12, 4.30]
 		 ]
 
