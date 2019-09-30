@@ -61,7 +61,7 @@ def exercicio_6_2():
 def exercicio_7_1(n):
 	s = 0
 
-	for i in range(1,n):
+	for i in range(1,n+1):
 		s += ((2*i-1)/i)
 
 	return s
