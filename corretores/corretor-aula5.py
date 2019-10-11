@@ -16,6 +16,9 @@
 """
 
 import sys, signal
+from random import randint
+from random import seed
+seed(7)
 
 def signalHandler(signum, frame):
     raise Exception('Timed out!')
@@ -84,19 +87,22 @@ testes = [[(n,0) for n in range(20)], \
 		  [n for n in range(1,31)]
 		 ]
 
+# Armazena quais exercícios o aluno alcançou nota 0 (zero)
+erros = ''
+
 ####################################################################################################
 
 # Try-catch usado para verificar se há erro de sintaxe no arquivo do aluno
 try:
 	aluno = __import__(sys.argv[1])
-except Exception as e:
-	print('Erro ao importar o arquivo do aluno: ' + str(e))
+except:
+	print('Erro ao importar o arquivo do aluno.')
 
 # Try-catch usado para verificar se há erro de sintaxe no arquivo do aluno
 try:
 	gabarito = __import__(sys.argv[2])
-except Exception as e:
-	print('Erro ao importar o gabarito: ' + str(e))
+except:
+	print('Erro ao importar o gabarito.')
 
 ############################################# Correção #############################################
 for i in range(numExercicios):
@@ -163,7 +169,16 @@ for i in range(numExercicios):
 				except Exception:
 					continue
 
-	notaFinal += (notaParcial * 1.0/numExercicios)
+	# Seleciona o número do exercício e adiciona em erros
+	if notaParcial == 0:
+		tokens = exercicios[i].split('_')
+		ex = ''
+		for j in range(1,len(tokens)):
+			ex = ex + tokens[j] + '.'
+		ex = ex[:-1]
+		erros = erros + ex + ','
+	else:
+		notaFinal += (notaParcial * 1.0/numExercicios)
 ####################################################################################################
 
 # Se a nota do aluno for >= 0.99, arredonda para 1.0, para o caso de o aluno ter acertado todas 
@@ -171,7 +186,12 @@ for i in range(numExercicios):
 if notaFinal >= 0.99:
 	notaFinal = 1.0
 
+if erros == '':
+	# O aluno não obteve nota zero em nenhum exercício
+	print('0', end='#')
+else:
+	print(erros[:-1], end='#')
+
 # Imprime a nota final do aluno com 4 casas decimais.
 # A nota está no intervalo [0,1]
 print('%.2f'%notaFinal)
-

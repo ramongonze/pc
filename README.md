@@ -8,7 +8,7 @@ Antes de executar o corretor automático:
 
 1. Crie um arquivo `gabarito-aulaX.py`: Ele deve ser criado dentro do diretório `gabaritos` e deve ser um arquivo .py que contenha as funções correspondentes aos exercícios. As funções do arquivo do gabarito serão chamadas e as suas saídas comparadas com as saídas das funções dos alunos.
 2. Crie um arquivo `corretor-aulaX.py`: Ele deve ser criado dentro do diretório `corretores` com base no arquivo `corretores/modelo-corretor.py`. Um novo arquivo deve ser criado copiando o conteúdo de `modelo-corretor.py` e preenchendo as variáveis `exercicios` e `testes`. Mais instruções são encontradas no arquivo modelo.
-3. Preencha a variável `numExercicio` do script `corretor.sh` com o número do exercício a ser corrigido.
+3. Preencha a variável `numAula` do script `corretor.sh` com o número do exercício a ser corrigido.
 
 **Obs.:** *X* deve ser substituído pelo número da aula correspondente nos arquivos `corretor-aulaX.py` e `gabarito-aulaX.py`.
 

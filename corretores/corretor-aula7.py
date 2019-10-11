@@ -16,6 +16,9 @@
 """
 
 import sys, signal
+from random import randint
+from random import seed
+seed(7)
 
 def signalHandler(signum, frame):
     raise Exception('Timed out!')
@@ -69,6 +72,9 @@ testes = [[n for n in range(1,5)], \
 		  [(a,b) for a in range(1,5) for b in range(5)], \
 		  [(a,b) for a in range(1,5) for b in range(5)]
 		 ]
+
+# Armazena quais exercícios o aluno alcançou nota 0 (zero)
+erros = ''
 
 ####################################################################################################
 
@@ -154,13 +160,28 @@ for i in range(1, numExercicios):
 				except Exception:
 					continue
 
-	notaFinal += (notaParcial * 1.0/numExercicios)
+	# Seleciona o número do exercício e adiciona em erros
+	if notaParcial == 0:
+		tokens = exercicios[i].split('_')
+		ex = ''
+		for j in range(1,len(tokens)):
+			ex = ex + tokens[j] + '.'
+		ex = ex[:-1]
+		erros = erros + ex + ','
+	else:
+		notaFinal += (notaParcial * 1.0/numExercicios)
 ####################################################################################################
 
 # Se a nota do aluno for >= 0.99, arredonda para 1.0, para o caso de o aluno ter acertado todas 
 # as questões e haver um erro de precisão no somatório das notas parciais.
 if notaFinal >= 0.99:
 	notaFinal = 1.0
+
+if erros == '':
+	# O aluno não obteve nota zero em nenhum exercício
+	print('0', end='#')
+else:
+	print(erros[:-1], end='#')
 
 # Imprime a nota final do aluno com 4 casas decimais.
 # A nota está no intervalo [0,1]

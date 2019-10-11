@@ -15,7 +15,7 @@
 	   com base no arquivo "corretores/modelo-corretor.py". Um novo arquivo deve ser criado copiando
 	   o conteúdo de "modelo-corretor.py" e preenchendo as variáveis "exercicios" e "testes". Mais
 	   instruções são encontradas no arquivo modelo.
-	3. Preencha a variável "numExercicio" deste script com o número do exercício a ser corrigido.
+	3. Preencha a variável "numAula" deste script com o número do exercício a ser corrigido.
 
 	Obs.: X deve ser substituído pelo número da aula correspondente nos arquivos "corretor-aulaX.py" e "gabarito-aulaX.py".
 
@@ -41,15 +41,17 @@
    					A nota do aluno está no intervalo [0,1] (porcentagem).
 '
 
-# Coloque o número do exercício a ser corrigido
-numExercicio=5
+# Coloque o número da aula
+numAula=9
 
-corretor="corretor-aula$numExercicio"
-gabarito="gabarito-aula$numExercicio"
+corretor="corretor-aula$numAula"
+gabarito="gabarito-aula$numAula"
+numAlunos=0
 ################################################################################
 
-# Remove o arquivo notas.csv se ele já existir
-rm -f notas.csv
+# Remove os arquivos notas.csv e erros.txt se eles já existirem
+rm -f notas.csv erros.txt relatorio.txt
+touch erros.txt notas.csv relatorio.txt
 
 # Renomeia os diretórios gerados pelo Moodle, deixando somente o nome dos alunos
 cd "./exercicios-alunos"
@@ -68,6 +70,7 @@ cd ..
 cd "./exercicios-alunos"
 while read caminhoAluno; do
 	if [[ "$caminhoAluno" != "./" ]]; then
+		numAlunos=$(($numAlunos+1))
 		IFS='/'
 		read -ra aluno <<< "$caminhoAluno"
 
@@ -112,7 +115,17 @@ while read caminhoAluno; do
 		done <<<$(find ./ -maxdepth 1 -path "*.py" -type f)
 		
 		if [[ "$existeArquivoPy" = true ]]; then
-			echo "${aluno[-1]},$(python3 ../../corretores/$corretor.py exercicio $gabarito)" >> ../../notas.csv
+			erros=$(printf "$(python3 ../../corretores/$corretor.py exercicio $gabarito)")
+			IFS='#'
+			read -ra resultado <<< "$erros"
+			echo "${aluno[-1]},${resultado[1]}" >> ../../notas.csv
+			IFS=','
+			read -ra questoes <<< "${resultado[0]}"
+			for i in "${questoes[@]}"
+			do
+			   :
+			   printf "$i\n" >> ../../erros.txt
+			done
 		else
 			echo "${aluno[-1]},O arquivo do aluno nao eh um Jupyter Notebook" >> ../../notas.csv
 		fi
@@ -122,13 +135,27 @@ while read caminhoAluno; do
 done <<<$(find ./ -maxdepth 1 -type d)
 cd ..
 
-echo "Feito"
+printf "Feito\n"
+
+echo "Gerando relatório de erros..."
+printf "$(python3 erros.py $numAula $numAlunos erros.txt)\n" >> relatorio.txt
+
+printf "Feito\n"
 
 # Remove os arquivos copiados para a pasta corretores
-rm -f corretores/exercicio.py corretores/$gabarito.py
+rm -f corretores/exercicio.py corretores/$gabarito.py erros.txt
 rm -f -r corretores/__pycache__
 
-# Ordena o arquivo notas.csv por ordem alfabética
+# Ordena o arquivo notas.csv por ordem lexicográfica
 sort notas.csv >> notas_tmp.txt
 rm notas.csv
 mv notas_tmp.txt notas.csv
+
+# Ordena o arquivo relatorio.txt por ordem lexicográfica
+rm -f relatorio_tmp.txt
+printf "Relatório de erros da aula $numAula\n" >> relatorio_tmp.txt
+printf "Total de alunos: $numAlunos\n" >> relatorio_tmp.txt
+printf "Quantidade de alunos que obtiveram 0:\n" >> relatorio_tmp.txt
+sort relatorio.txt >> relatorio_tmp.txt
+rm relatorio.txt
+mv relatorio_tmp.txt relatorio.txt
