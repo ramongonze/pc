@@ -5,30 +5,20 @@ def exercicio_1(data):
 	tokens = data.split('/')
 	return tokens[0] + ' de ' + meses[int(tokens[1])] + ' de ' + tokens[2]
 
-def exercicio_2_1(frase):
-	return frase.count(' ')
-
-def exercicio_2_2(frase):
-	return frase.count('a') + frase.count('e') + frase.count('i') + frase.count('o') + frase.count('u')
-
-def exercicio_2_3(frase):
-	return frase.count('')
-	consoantes = 'bcdfghjklmnpqrstvwxyz'
-	ans = 0
-	for letra in frase:
-		if letra in consoantes:
-			ans += 1
-	return ans
-
-def exercicio_2_4(frase):
-	return frase.count('')
+def exercicio_2(frase):
+	vogais = 'aeiouAEIOU'
+	consoantes = 'bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ'
 	pontuacao = '?!.,;:'
-	ans = 0
-	for c in frase:
-		if c in pontuacao:
-			ans += 1
-	return ans
-
+	ans = []
+	ans.append([(' ', frase.count(' '))])
+	for p in [vogais, consoantes, pontuacao]:
+		l = []
+		for c in p:
+			n = frase.count(c)
+			if n > 0:
+				l.append((c, n))
+		ans.append(l)
+	return tuple(ans)
 
 def exercicio_3(cpf):
 	tokens = cpf.split('.')
@@ -126,4 +116,4 @@ def exercicio_5_3(n):
 		for j in range(1,len(t[i-1])):
 			triangulo = triangulo + '\t\t' + str(t[i-1][j])
 		triangulo += '\n'
-	return triangulo
+	return triangulo[:-1]

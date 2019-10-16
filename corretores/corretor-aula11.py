@@ -18,7 +18,7 @@
 		   		  Em caso de erro, a saída será uma string com o erro correspondente.
 """
 
-import sys, signal
+import sys, signal, random
 from random import randint
 from random import seed
 seed(7)
@@ -35,7 +35,13 @@ notaFinal = 0.0
 	A variável 'exercicios' deve ser uma lista de strings com os nomes das funções dos exercícios.
 	Ex.: exercicios = ["exercicio_1_1", "exercicio_1_2", "exercicio_2", ...]
 """
-exercicios = [\
+exercicios = ['exercicio_1',\
+			  'exercicio_2',\
+			  'exercicio_3',\
+			  'exercicio_4',\
+			  'exercicio_5_1',\
+			  'exercicio_5_2',\
+			  'exercicio_5_3',\
 			 ]
 
 numExercicios = len(exercicios) # Número TOTAL de exercícios
@@ -50,7 +56,15 @@ numExercicios = len(exercicios) # Número TOTAL de exercícios
 
 	--> Se a função não receber nenhum parâmetro, a sua lista de testes deverá ser uma lista vazia.
 """
-testes = [\
+
+caracteres = '       ' + 'aeiouAEIOU' + 'bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ' + '?!.,;:'
+testes = [['{:02}/{:02}/{:02}'.format(randint(1,28), randint(1,12), randint(1900,2500)) for i in range(20)],\
+		  [''.join(random.choice(caracteres) for i in range(randint(1,30))) for j in range(20)],\
+		  ['123.456.789-12', '147.895.685-98', '123.456789.12', '01234567890', '111.111.111-11', '328.265.015-93'],\
+		  list(range(0,101)),\
+		  [],\
+		  [],\
+		  list(range(1,19))
 		 ]
 
 # Armazena quais exercícios o aluno alcançou nota 0 (zero)
@@ -98,16 +112,30 @@ for i in range(numExercicios):
 		for j in range(nTestes):
 			if type(testes[i][j]) != type((0,0)):
 				# A função possui somente 1 parâmetro
-				execucaoGabarito = 'saidaGabarito = gabarito.' + exercicios[i] + '(' + str(testes[i][j]) + ')'
+				if type(testes[i][j]) == type(''):
+					execucaoGabarito = 'saidaGabarito = gabarito.' + exercicios[i] + "('" + testes[i][j] + "')"
+				else:
+					execucaoGabarito = 'saidaGabarito = gabarito.' + exercicios[i] + '(' + str(testes[i][j]) + ')'
 				exec(execucaoGabarito)
 				
 				try:
-					execucaoAluno = 'saidaAluno = aluno.' + exercicios[i] + '(' + str(testes[i][j]) + ')'
+					if type(testes[i][j]) == type(''):
+						execucaoAluno = 'saidaAluno = aluno.' + exercicios[i] + "('" + testes[i][j] + "')"
+					else:
+						execucaoAluno = 'saidaAluno = aluno.' + exercicios[i] + '(' + str(testes[i][j]) + ')'
+
 					signal.alarm(tempoAlarme) # Ativa o alarme
 					exec(execucaoAluno)
 					signal.alarm(0) # Cancela o alarme
 
-					assert(saidaGabarito == saidaAluno)
+					if i == 1: # Exercício 2
+						assert(saidaGabarito[0] == saidaAluno[0])
+						for l in range(1,4):
+							for pair in saidaGabarito[l]:
+								assert(pair in saidaAluno[l])
+					else:
+						assert(saidaGabarito == saidaAluno)
+
 					notaParcial += (1/nTestes)
 				except Exception:
 					continue
