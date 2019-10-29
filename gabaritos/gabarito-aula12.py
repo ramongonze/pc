@@ -113,3 +113,37 @@ def exercicio_12_3_3(representacao, letra, codigo):
 				return representacao
 		return None
 	return representacao
+
+def exercicio_12_3_4(string, lista_de_contagens):
+
+
+def exercicio_12_3_5(representacao, letras):
+	if type(representacao) == type((0,0)):
+		for l in letras:
+			if l in representacao[0]:
+				representacao[1][representacao[0].index(l)] += 1
+			else:
+				representacao[0].append(l)
+				representacao[1].append(0)
+	elif type(representacao[0]) == type('a'):
+		for l in letras:
+			if l in representacao:
+				representacao[representacao.index(l)+1] += 1
+			else:
+				representacao.append(l)
+				representacao.append(0)
+	else:
+		for l in letras:
+			found = False
+			for i in range(len(representacao)):
+				if l == representacao[i][0]:
+					found = True
+					aux = list(representacao[i])
+					aux[1] += 1
+					representacao[i] = tuple(aux)
+			if not found:
+				representacao.append((l,0))
+	return representacao
+
+def exercicio_12_3_6(representacao, letras):
+	
