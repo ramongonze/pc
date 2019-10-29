@@ -42,7 +42,7 @@
 '
 
 # Coloque o número da aula
-numAula=9
+numAula=8
 
 corretor="corretor-aula$numAula"
 gabarito="gabarito-aula$numAula"

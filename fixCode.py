@@ -31,8 +31,7 @@ while linha < nLinhas:
 		linha += 1
 		while linha < nLinhas and (codigoLimpo[linha][0] == '\t' or \
 			codigoLimpo[linha][0] == ' '):
-			funcao += (codigoLimpo[linha].lower().\
-				replace('exercício', 'exercicio'))
+			funcao += (codigoLimpo[linha].replace('exercício', 'exercicio'))
 			linha += 1
 
 		# Verifica se a função possui a palavra return. Caso não, ela não é adicionada no arquivo
