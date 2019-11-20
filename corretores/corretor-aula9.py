@@ -84,7 +84,7 @@ except:
 for i in range(numExercicios):
 	nTestes = len(testes[i]) # Números de testes para o i-ésimo exercício
 
-	notaParcial = 0.0
+	notaParcial = 0
 	if nTestes == 0:
 		# A função não recebe parâmetros
 
@@ -117,7 +117,7 @@ for i in range(numExercicios):
 					signal.alarm(0) # Cancela o alarme
 
 					assert(saidaGabarito == saidaAluno)
-					notaParcial += (1/nTestes)
+					notaParcial += 1
 				except Exception:
 					continue
 			else:
@@ -141,7 +141,7 @@ for i in range(numExercicios):
 					signal.alarm(0) # Cancela o alarme
 
 					assert(saidaGabarito == saidaAluno)
-					notaParcial += (1/nTestes)
+					notaParcial += 1
 				except Exception:
 					continue
 
@@ -154,8 +154,10 @@ for i in range(numExercicios):
 		ex = ex[:-1]
 		erros = erros + ex + ','
 	else:
-		notaFinal += (notaParcial * 1.0/numExercicios)
+		notaFinal += (notaParcial/nTestes)
 ####################################################################################################
+
+notaFinal /= numExercicios
 
 # Se a nota do aluno for >= 0.99, arredonda para 1.0, para o caso de o aluno ter acertado todas 
 # as questões e haver um erro de precisão no somatório das notas parciais.
