@@ -75,7 +75,7 @@ except:
 for i in range(numExercicios):
 	nTestes = len(testes[i]) # Números de testes para o i-ésimo exercício
 
-	notaParcial = 0.0
+	notaParcial = 0
 	if nTestes == 0:
 		# A função não recebe parâmetros
 
@@ -98,17 +98,25 @@ for i in range(numExercicios):
 		for j in range(nTestes):
 			if type(testes[i][j]) != type((0,0)):
 				# A função possui somente 1 parâmetro
-				execucaoGabarito = 'saidaGabarito = gabarito.' + exercicios[i] + '(' + str(testes[i][j]) + ')'
+				execucaoGabarito = 'saidaGabarito = gabarito.' + exercicios[i] + '('
+				if type(testes[i][j]) == type(''):
+					execucaoGabarito = execucaoGabarito + "'" + testes[i][j] + "')"
+				else:
+					execucaoGabarito = execucaoGabarito + str(testes[i][j]) + ")"
 				exec(execucaoGabarito)
 				
 				try:
-					execucaoAluno = 'saidaAluno = aluno.' + exercicios[i] + '(' + str(testes[i][j]) + ')'
+					execucaoAluno = 'saidaAluno = aluno.' + exercicios[i] + '('
+					if type(testes[i][j]) == type(''):
+						execucaoAluno = execucaoAluno + "'" + testes[i][j] + "')"
+					else:
+						execucaoAluno = execucaoAluno + str(testes[i][j]) + ")"
 					signal.alarm(tempoAlarme) # Ativa o alarme
 					exec(execucaoAluno)
 					signal.alarm(0) # Cancela o alarme
 
 					assert(saidaGabarito == saidaAluno)
-					notaParcial += (1/nTestes)
+					notaParcial += 1
 				except Exception:
 					continue
 			else:
@@ -118,8 +126,12 @@ for i in range(numExercicios):
 				execucaoGabarito = 'saidaGabarito = gabarito.' + exercicios[i] + '('
 				execucaoAluno = 'saidaAluno = aluno.' + exercicios[i] + '('
 				for parametro in range(nParam):
-					execucaoGabarito = execucaoGabarito + str(testes[i][j][parametro]) + ','
-					execucaoAluno 	 = execucaoAluno    + str(testes[i][j][parametro]) + ','
+					if type(testes[i][j][parametro]) == type(''):
+						execucaoGabarito = execucaoGabarito + "'" + testes[i][j][parametro] + "',"
+						execucaoAluno 	 = execucaoAluno    + "'" + testes[i][j][parametro] + "',"
+					else:
+						execucaoGabarito = execucaoGabarito + str(testes[i][j][parametro]) + ','
+						execucaoAluno 	 = execucaoAluno    + str(testes[i][j][parametro]) + ','
 
 				execucaoGabarito = execucaoGabarito[:-1] + ')' # Substitui a última vírgula por ')'
 				execucaoAluno 	 = execucaoAluno[:-1] + ')' # Substitui a última vírgula por ')'
@@ -132,7 +144,7 @@ for i in range(numExercicios):
 					signal.alarm(0) # Cancela o alarme
 
 					assert(saidaGabarito == saidaAluno)
-					notaParcial += (1/nTestes)
+					notaParcial += 1
 				except Exception:
 					continue
 
@@ -145,8 +157,10 @@ for i in range(numExercicios):
 		ex = ex[:-1]
 		erros = erros + ex + ','
 	else:
-		notaFinal += (notaParcial * 1.0/numExercicios)
+		notaFinal += (notaParcial/nTestes)
 ####################################################################################################
+
+notaFinal /= numExercicios
 
 # Se a nota do aluno for >= 0.99, arredonda para 1.0, para o caso de o aluno ter acertado todas 
 # as questões e haver um erro de precisão no somatório das notas parciais.

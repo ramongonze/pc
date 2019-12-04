@@ -128,7 +128,7 @@ def exercicio_12_3_4(simbolos, representacao):
 	else:
 		for letra, count in representacao:
 			if letra in simbolos:
-				ans.append((s,count))
+				ans.append((letra,count))
 
 	return sorted(ans)
 
@@ -164,17 +164,17 @@ def exercicio_12_3_6(representacao, letras):
 	ans = []
 
 	if type(representacao) == type((0,0)):
-		for s in simbolos:
+		for s in letras:
 			if s in representacao[0]:
 				ans.append((s,representacao[1][representacao[0].index(s)]))
 	elif type(representacao[0]) == type('a'):
-		for s in simbolos:
+		for s in letras:
 			if s in representacao:
 				ans.append((s,representacao[representacao.index(s)+1]))
 	else:
 		for letra, count in representacao:
-			if letra in simbolos:
-				ans.append((s,count))
+			if letra in letras:
+				ans.append((letra,count))
 
 	if ans == []:
 		return None
@@ -208,16 +208,13 @@ def exercicio_12_4_2(dicionario,letra):
 def exercicio_12_4_3(dicionario,letra,codigo):
 	if letra not in dicionario:
 		return None
-
 	if codigo == 0:
 		dicionario[letra] = 0
-	else codigo == -1:
+	elif codigo == -1:
 		del dicionario[letra]
 	else:
 		return None
-
 	return dicionario
-
 
 def exercicio_12_4_4(string,dicionario):
 	ans = {}
@@ -251,9 +248,10 @@ def exercicio_12_4_6(dicionario,letras):
 def exercicio_12_5_1(agenda, nome, numero):
 	if nome == '' or numero == '':
 		return agenda
-
-	agenda[nome].append(numero)
-
+	if nome in agenda:
+		agenda[nome].append(numero)
+	else:
+		agenda[nome] = [numero]
 	return agenda
 
 def exercicio_12_5_2(agenda, nome, numero):
@@ -262,7 +260,7 @@ def exercicio_12_5_2(agenda, nome, numero):
 	elif nome == '' and numero != '':
 		count = 0
 		for pessoa in agenda:
-			if numero in agenda[pessoa]:
+			if numero == agenda[pessoa]:
 				agenda[pessoa].remove(numero)
 				if agenda[pessoa] == []:
 					del agenda[pessoa]
@@ -270,18 +268,16 @@ def exercicio_12_5_2(agenda, nome, numero):
 		
 		if count == 0:
 			return None
-
 	elif nome != '' and numero == '':
 		if nome in agenda:
 			agenda[nome] = []
 		else:
 			return None
 	else:
-		if nome in agenda and numero in agenda[nome]:
-			agenda[nome].remove(numero)
+		if nome in agenda and numero == agenda[nome]:
+			agenda[nome] = []
 		else:
 			return None
-
 	return agenda
 
 def exercicio_12_5_3(agenda, nome1, numero1, nome2, numero2):
@@ -290,42 +286,33 @@ def exercicio_12_5_3(agenda, nome1, numero1, nome2, numero2):
 		agenda[nome1].append(numero2)
 		agenda[nome2] = agenda[nome1]
 		del agenda[nome1]
-
 	elif nome1 != '' and numero1 == '' and nome2 != '' and numero2 == '':
 		agenda[nome2] = agenda[nome1]
 		del agenda[nome1]
-
 	elif nome1 != '' and numero1 != '' and nome2 == '' and numero2 != '':
 		agenda[nome1].remove(numero1)
 		agenda[nome2].append(numero2)
-
 	elif nome1 != '' and numero1 == '' and nome2 != '' and numero2 != '':
 		del agenda[nome1]
 		agenda[nome2] = [numero2]
-
 	elif nome1 == '' and numero1 != '' and nome2 == '' and numero2 != '':
 		for pessoa in agenda:
 			if numero1 in agenda[pessoa]:
 				agenda[pessoa].remove(numero1)
 				agenda[pessoa].append(numero2)
-
 	elif nome1 == '' and numero1 != '' and nome2 != '' and numero2 != '':
 		agenda[nome2] = [numero1, numero2]
-
 	else:
 		return None
-
 	return agenda
 
 def exercicio_12_5_4(agenda):
 	ans = ''
-
 	for pessoa in agenda:
-		ans = pessoa + ': '
+		ans += pessoa + ': '
 		for telefone in agenda[pessoa]:
 			ans = ans + telefone + '; '
 		ans += '\n'
-	
 	return ans
 
 def exercicio_12_5_5(agenda, nome):
