@@ -31,6 +31,7 @@ def exercicio_12_0(nome_do_arquivo):
 	for linha in f:
 		frase = linha.split(' ')
 		for palavra in frase:
+			palavra = palavra.replace('\n', '')
 			if palavra not in frequencias:
 				frequencias[palavra] = 1
 			else:
@@ -57,11 +58,14 @@ def exercicio_12_0(nome_do_arquivo):
 	f = open(nome_do_arquivo)
 	linhas = []
 	count = 1
+	contabilizada = []
 	for linha in f:
 		frase = linha.split(' ')
 		for palavra in frase:
-			if palavra in mais_frequentes:
+			palavra = palavra.replace('\n', '')
+			if palavra in mais_frequentes and palavra not in contabilizada:
 				linhas.append(count)
+				contabilizada.append(palavra)
 		count += 1
 	f.close()
 

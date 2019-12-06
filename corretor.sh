@@ -42,7 +42,7 @@
 '
 
 # Coloque o número da aula
-numAula=8
+numAula=15
 
 corretor="corretor-aula$numAula"
 gabarito="gabarito-aula$numAula"
@@ -145,6 +145,12 @@ printf "Feito\n"
 # Remove os arquivos copiados para a pasta corretores
 rm -f corretores/exercicio.py corretores/$gabarito.py erros.txt
 rm -f -r corretores/__pycache__
+
+# Adiciona um cabeçalho se o número da aula for 15. Obs: A "aula 15" é o teste 3.
+if [[ $numAula -eq 15 ]]; then
+	touch notas_tmp.txt
+	echo "Nome do aluno(a),Questão 1,Questão 2,Questão 3,Questão 4,Questão 5,Questão 6,Questão 7,Questão 8,Questão 9" >> notas_tmp.txt
+fi
 
 # Ordena o arquivo notas.csv por ordem lexicográfica
 sort notas.csv >> notas_tmp.txt
