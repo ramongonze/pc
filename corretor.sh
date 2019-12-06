@@ -149,7 +149,7 @@ rm -f -r corretores/__pycache__
 # Adiciona um cabeçalho se o número da aula for 15. Obs: A "aula 15" é o teste 3.
 if [[ $numAula -eq 15 ]]; then
 	touch notas_tmp.txt
-	echo "Nome do aluno(a),Questão 1,Questão 2,Questão 3,Questão 4,Questão 5,Questão 6,Questão 7,Questão 8,Questão 9" >> notas_tmp.txt
+	echo "Nome do aluno(a),Questão 1,Questão 2,Questão 3,Questão 4,Questão 5,Questão 6 (it),Questão 6 (rec),Questão 7,Questão 8,Questão 9" >> notas_tmp.txt
 fi
 
 # Ordena o arquivo notas.csv por ordem lexicográfica
